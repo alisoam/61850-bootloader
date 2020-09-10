@@ -1,0 +1,7 @@
+r
+h
+loadbin   bootloader.bin, 0x60000000
+verifybin bootloader.bin, 0x60000000
+r
+g
+exit

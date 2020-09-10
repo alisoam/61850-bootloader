@@ -1,0 +1,4 @@
+[submodule "modules/cmsis"]
+	path = modules/cmsis
+	url = https://github.com/ARM-software/CMSIS_5
+	shallow = true

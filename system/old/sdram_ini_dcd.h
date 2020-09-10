@@ -1,0 +1,13 @@
+#ifndef __EVKMIMXRT1060_SDRAM_INI_DCD__
+#define __EVKMIMXRT1060_SDRAM_INI_DCD__
+
+#include <stdint.h>
+
+#define FSL_XIP_BOARD_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+
+#define DCD_TAG_HEADER (0xD2)
+#define DCD_VERSION (0x40)
+#define DCD_TAG_HEADER_SHIFT (24)
+#define DCD_ARRAY_SIZE 1
+
+#endif /* __EVKMIMXRT1060_SDRAM_INI_DCD__ */
