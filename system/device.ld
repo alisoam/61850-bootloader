@@ -30,12 +30,15 @@ ENTRY(Reset_Handler)
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
+VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
 
 /* Specify the memory areas */
 MEMORY
 {
-  m_interrupts          (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00000400
-  m_text                (RX)  : ORIGIN = 0x00000400, LENGTH = 0x0001FC00
+  m_flash_config        (RX)  : ORIGIN = 0x60000000, LENGTH = 0x00001000
+  m_ivt                 (RX)  : ORIGIN = 0x60001000, LENGTH = 0x00001000
+  m_interrupts          (RX)  : ORIGIN = 0x60002000, LENGTH = 0x00000400
+  m_text                (RX)  : ORIGIN = 0x60002400, LENGTH = 0x007FDC00
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
   m_data2               (RW)  : ORIGIN = 0x20200000, LENGTH = 0x000C0000
 }
@@ -46,21 +49,38 @@ SECTIONS
   __NCACHE_REGION_START = ORIGIN(m_data2);
   __NCACHE_REGION_SIZE  = 0;
 
+  .flash_config :
+  {
+    . = ALIGN(4);
+    __FLASH_BASE = .;
+    KEEP(* (.boot_hdr.conf))     /* flash config section */
+    . = ALIGN(4);
+  } > m_flash_config
+
+  ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
+
+  .ivt : AT(ivt_begin)
+  {
+    . = ALIGN(4);
+	KEEP(* (.boot_hdr.ivt))           /* ivt section */
+	KEEP(* (.boot_hdr.boot_data))     /* boot section */
+	KEEP(* (.boot_hdr.dcd_data))      /* dcd section */
+    . = ALIGN(4);
+  } > m_ivt
+
   /* The startup code goes first into internal RAM */
   .interrupts :
   {
     __VECTOR_TABLE = .;
-    __vector_start__ = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
-    __vector_end__ = .;
   } > m_interrupts
 
   /* The program code and other data goes into internal RAM */
   .text :
   {
-    __text_start = .;
     . = ALIGN(4);
     *(.text)                 /* .text sections (code) */
     *(.text*)                /* .text* sections (code) */
@@ -145,11 +165,21 @@ SECTIONS
   } > m_text
 
   __etext = .;    /* define a global symbol at end of code */
-  __text_end__ = .;
   __DATA_ROM = .; /* Symbol is used by startup for data initialization */
 
-  __VECTOR_RAM = ORIGIN(m_interrupts);
-  __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
+  .interrupts_ram :
+  {
+    . = ALIGN(4);
+    __VECTOR_RAM__ = .;
+    __interrupts_ram_start__ = .; /* Create a global symbol at data start */
+    *(.m_interrupts_ram)     /* This is a user defined section */
+    . += VECTOR_RAM_SIZE;
+    . = ALIGN(4);
+    __interrupts_ram_end__ = .; /* Define a global symbol at data end */
+  } > m_data
+
+  __VECTOR_RAM = DEFINED(__ram_vector_table__) ? __VECTOR_RAM__ : ORIGIN(m_interrupts);
+  __RAM_VECTOR_TABLE_SIZE_BYTES = DEFINED(__ram_vector_table__) ? (__interrupts_ram_end__ - __interrupts_ram_start__) : 0x0;
 
   .data : AT(__DATA_ROM)
   {

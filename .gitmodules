@@ -2,3 +2,6 @@
 	path = modules/cmsis
 	url = https://github.com/ARM-software/CMSIS_5
 	shallow = true
+[submodule "modules/FreeRTOS"]
+	path = modules/FreeRTOS
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git

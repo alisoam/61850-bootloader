@@ -5,8 +5,8 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 
 add_compile_definitions(XIP_BOOT_HEADER_ENABLE=1)
 add_compile_definitions(XIP_EXTERNAL_FLASH=1)
-add_compile_definitions(__Vectors=__isr_vector)
-add_compile_definitions(__Vectors=__isr_vector)
+#add_compile_definitions(__Vectors=__isr_vector)
+#add_compile_definitions(__Vectors=__isr_vector)
 
 project(bootloader)
 
@@ -99,7 +99,7 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Xlinker")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Map=output.map")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -u _printf_float")
 
-set(LINKER_SCRIPT "system/MIMXRT1062xxxxx_flexspi_nor.ld")
+set(LINKER_SCRIPT "system/device.ld")
 
 # -Xlinker --wrap=malloc -Xlinker --wrap=free
 set (CMAKE_C_LINK_EXECUTABLE "<CMAKE_LINKER> ${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_SOURCE_DIR}/${LINKER_SCRIPT} <OBJECTS> <LINK_LIBRARIES> -o <TARGET>")
@@ -127,9 +127,9 @@ add_executable(bootloader.elf
 
   ./system/startup_MIMXRT1062.S
 
-  ./system/evkmimxrt1060_flexspi_nor_config.c
-  ./system/evkmimxrt1060_sdram_ini_dcd.c
   ./system/fsl_flexspi_nor_boot.c
+  ./system/flexspi_nor_config.c
+  ./system/sdram_ini_dcd.c
 
   ./system/syscalls.c
   ./system/utils/fsl_sbrk.c
