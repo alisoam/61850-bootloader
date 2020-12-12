@@ -17,22 +17,27 @@
 #define BT_FUSE_SEL_OCOTP_ADDRESS 0x06
 #define BT_FUSE_SEL_OCOTP_MASK    SRC_SBMR2_BT_FUSE_SEL_MASK
 
+#define APPLICATION               0x60100000
+
 __attribute__((constructor(101))) static void setupHardware() {
   BOARD_ConfigMPU();
   BOARD_InitPins();
   BOARD_BootClockRUN();
   BOARD_InitBootPeripherals();
-
-  CLOCK_EnableClock(kCLOCK_Trace);
-  extern void SWO_Init();
-  SWO_Init();
 }
 
-void USBTask(void* arg) {
-  while (true) {
-    vTaskDelay(5 * configTICK_RATE_HZ);
-    printf("Still Alive.\n");
-  }
+void startApplication()
+{
+  uint32_t* stackPtrUA  = (uint32_t*)APPLICATION;
+  uint32_t* startPtrVUA = (uint32_t*)APPLICATION;
+  startPtrVUA += 1;
+  uint32_t startVUA = *startPtrVUA;
+
+  startVUA |= 1;
+  void (*application)() = (void (*)())startVUA;
+  __set_MSP( *stackPtrUA );
+  __ISB();
+  application();
 }
 
 int main()
@@ -65,7 +70,7 @@ int main()
     boardLedSet(BOARD_LED1 + i, 0);
   }
 
- // xTaskCreate(USBTask, "enet", 2*configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);
+  startApplication();
 
   vTaskStartScheduler();
   return 1;

@@ -158,7 +158,8 @@ void BOARD_ConfigMPU(void)
 
 
 void boardLedSet(unsigned int led, bool value) {
+  GPIO_Type* ledGPIO[] = {BOARD_LED1_GPIO, BOARD_LED2_GPIO, BOARD_LED3_GPIO};
   uint32_t ledPin[] = {BOARD_LED1_GPIO_PIN, BOARD_LED2_GPIO_PIN, BOARD_LED3_GPIO_PIN};
   if (led < BOARD_LED_NUM)
-    GPIO_PinWrite(GPIO3, ledPin[led], value);
+    GPIO_PinWrite(ledGPIO[led], ledPin[led], value);
 }

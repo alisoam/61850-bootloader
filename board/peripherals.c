@@ -6,11 +6,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v7.0
+product: Peripherals v8.0
 processor: MIMXRT1062xxxxA
 package_id: MIMXRT1062DVL6A
 mcu_data: ksdk2_0
-processor_version: 7.0.1
+processor_version: 8.0.3
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: d6e84094-ad11-42b4-8ad2-e6e1cd911694
@@ -22,14 +22,9 @@ functionalGroups:
 component:
 - type: 'system'
 - type_id: 'system_54b53072540eeeb8f8e9343e71f28176'
-- global_system_definitions: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-component:
-- type: 'msg'
-- type_id: 'msg_6e2baaf3b97dbeef01c0043275f9a0e7'
-- global_messages: []
+- global_system_definitions:
+  - user_definitions: ''
+  - user_includes: ''
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -39,247 +34,10 @@ component:
 #include "peripherals.h"
 
 /***********************************************************************************************************************
- * BOARD_InitPeripherals functional group
- **********************************************************************************************************************/
-/***********************************************************************************************************************
- * SEMC initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'SEMC'
-- type: 'semc'
-- mode: 'general'
-- custom_name_enabled: 'false'
-- type_id: 'semc_8caeb64ecb2dd34cd7fd365f593107fd'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'SEMC'
-- config_sets:
-  - fsl_semc:
-    - enableDCD: 'false'
-    - clockConfig:
-      - clockSource: 'kSEMC_ClkSrcPeri'
-      - clockSourceFreq: 'BOARD_BootClockRUN'
-    - semc_config_t:
-      - dqsMode: 'kSEMC_Loopbackinternal'
-      - cmdTimeoutCycles: '0'
-      - busTimeoutCycles: '0x1F'
-      - queueWeight:
-        - queueaWeight:
-          - queueaConfig:
-            - qos: '0'
-            - aging: '0'
-            - slaveHitSwith: '0'
-            - slaveHitNoswitch: '0'
-          - queueaValue: '0'
-        - queuebWeight:
-          - queuebConfig:
-            - qos: '0'
-            - aging: '0'
-            - slaveHitSwith: '0'
-            - weightPagehit: '0'
-            - bankRotation: '0'
-          - queuebValue: '0'
-    - semc_sdram_config_t:
-      - csxPinMux: 'kSEMC_MUXCSX0'
-      - semcSdramCs: 'kSEMC_SDRAM_CS0'
-      - address: '0x80000000'
-      - memsize_kbytes: '32768'
-      - portSize: 'kSEMC_PortSize16Bit'
-      - burstLen: 'kSEMC_Sdram_BurstLen8'
-      - columnAddrBitNum: 'kSEMC_SdramColunm_9bit'
-      - casLatency: 'kSEMC_LatencyThree'
-      - tPrecharge2Act_Ns: '18'
-      - tAct2ReadWrite_Ns: '18'
-      - tRefreshRecovery_Ns: '127'
-      - tWriteRecovery_Ns: '12'
-      - tCkeOff_Ns: '42'
-      - tAct2Prechage_Ns: '42'
-      - tSelfRefRecovery_Ns: '67'
-      - tRefresh2Refresh_Ns: '60'
-      - tAct2Act_Ns: '60'
-      - tPrescalePeriod_Ns: '160'
-      - tIdleTimeout_Ns: '0'
-      - refreshPeriod_nsPerRow: '64'
-      - refreshUrgThreshold: '64'
-      - refreshBurstLen: '1'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-semc_config_t SEMC_config = {
-  .dqsMode = kSEMC_Loopbackinternal,
-  .cmdTimeoutCycles = 0,
-  .busTimeoutCycles = 0x1F,
-  .queueWeight = {
-    .queueaWeight = {
-      .queueaConfig = {
-        .qos = 0,
-        .aging = 0,
-        .slaveHitSwith = 0,
-        .slaveHitNoswitch = 0
-      },
-      .queueaValue = 0
-    },
-    .queuebWeight = {
-      .queuebConfig = {
-        .qos = 0,
-        .aging = 0,
-        .slaveHitSwith = 0,
-        .weightPagehit = 0,
-        .bankRotation = 0
-      },
-      .queuebValue = 0
-    }
-  }
-};
-semc_sdram_config_t SEMC_sdram_struct = {
-  .csxPinMux = kSEMC_MUXCSX0,
-  .address = 0x80000000,
-  .memsize_kbytes = 32768,
-  .portSize = kSEMC_PortSize16Bit,
-  .burstLen = kSEMC_Sdram_BurstLen8,
-  .columnAddrBitNum = kSEMC_SdramColunm_9bit,
-  .casLatency = kSEMC_LatencyThree,
-  .tPrecharge2Act_Ns = 18,
-  .tAct2ReadWrite_Ns = 18,
-  .tRefreshRecovery_Ns = 127,
-  .tWriteRecovery_Ns = 12,
-  .tCkeOff_Ns = 42,
-  .tAct2Prechage_Ns = 42,
-  .tSelfRefRecovery_Ns = 67,
-  .tRefresh2Refresh_Ns = 60,
-  .tAct2Act_Ns = 60,
-  .tPrescalePeriod_Ns = 160,
-  .tIdleTimeout_Ns = 0,
-  .refreshPeriod_nsPerRow = 64,
-  .refreshUrgThreshold = 64,
-  .refreshBurstLen = 1
-};
-
-void SEMC_init(void) {
-  /* Initialize SEMC peripheral. */
-  SEMC_Init(SEMC_PERIPHERAL, &SEMC_config);
-  /* Initialize SEMC SDRAM. */
-  SEMC_ConfigureSDRAM(SEMC_PERIPHERAL, kSEMC_SDRAM_CS0, &SEMC_sdram_struct, 160000000);
-}
-
-/***********************************************************************************************************************
- * TRNG initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'TRNG'
-- type: 'TRNG'
-- mode: 'General'
-- custom_name_enabled: 'false'
-- type_id: 'trng_dd5b2a6f14d45ca091cf6c9a38560d5e'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'TRNG'
-- config_sets:
-  - fsl_trng:
-    - settings_trng_config_t:
-      - clockMode: 'kTRNG_ClockModeRingOscillator'
-      - struct_ring_oscillator:
-        - ringOscDiv: 'kTRNG_RingOscDiv0'
-        - sampleMode: 'kTRNG_SampleModeRaw'
-      - entropyDelay: '3200'
-      - sampleSize: '2500'
-      - sparseBitLimit: '63'
-      - retryCount: '1'
-      - lock: 'false'
-      - struct_statistical_checks:
-        - longRunMaxLimit: '34'
-        - monobitLimit:
-          - maximum: '1384'
-          - minimum: '1116'
-        - runBit1Limit:
-          - maximum: '405'
-          - minimum: '227'
-        - runBit2Limit:
-          - maximum: '220'
-          - minimum: '98'
-        - runBit3Limit:
-          - maximum: '125'
-          - minimum: '37'
-        - runBit4Limit:
-          - maximum: '75'
-          - minimum: '11'
-        - runBit5Limit:
-          - maximum: '47'
-          - minimum: '1'
-        - runBit6PlusLimit:
-          - maximum: '47'
-          - minimum: '1'
-        - pokerLimit:
-          - maximum: '26912'
-          - minimum: '24445'
-        - frequencyCountLimit:
-          - maximum: '25600'
-          - minimum: '1600'
-    - quick_selection: 'Default'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const trng_config_t TRNG_config = {
-  .lock = false,
-  .clockMode = kTRNG_ClockModeRingOscillator,
-  .ringOscDiv = kTRNG_RingOscDiv0,
-  .sampleMode = kTRNG_SampleModeRaw,
-  .entropyDelay = 3200,
-  .sampleSize = 2500,
-  .sparseBitLimit = 63,
-  .retryCount = 1,
-  .longRunMaxLimit = 34,
-  .monobitLimit = {
-    .maximum = 1384,
-    .minimum = 1116
-  },
-  .runBit1Limit = {
-    .maximum = 405,
-    .minimum = 227
-  },
-  .runBit2Limit = {
-    .maximum = 220,
-    .minimum = 98
-  },
-  .runBit3Limit = {
-    .maximum = 125,
-    .minimum = 37
-  },
-  .runBit4Limit = {
-    .maximum = 75,
-    .minimum = 11
-  },
-  .runBit5Limit = {
-    .maximum = 47,
-    .minimum = 1
-  },
-  .runBit6PlusLimit = {
-    .maximum = 47,
-    .minimum = 1
-  },
-  .pokerLimit = {
-    .maximum = 26912,
-    .minimum = 24445
-  },
-  .frequencyCountLimit = {
-    .maximum = 25600,
-    .minimum = 1600
-  }
-};
-
-void TRNG_init(void) {
-  /* Initialize TRNG. */
-  TRNG_Init(TRNG_PERIPHERAL, &TRNG_config);
-}
-
-/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
-  /* Initialize components */
-  SEMC_init();
-  TRNG_init();
 }
 
 /***********************************************************************************************************************

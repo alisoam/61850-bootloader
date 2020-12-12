@@ -22,7 +22,7 @@
 caddr_t _sbrk(int incr);
 caddr_t _sbrk(int incr)
 {
-    extern char end __asm("__HeapBase");
+    extern char end __asm("end");
     extern char heap_limit __asm("__HeapLimit");
     static char *heap_end;
     char *prev_heap_end;

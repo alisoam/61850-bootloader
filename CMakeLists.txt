@@ -127,9 +127,6 @@ add_executable(bootloader.elf
   ./board/pin_mux.c
   ./board/board.c
 
-  #  ./system/startup.S
-  #  ./system/startup.c
-
   ./system/startup.S
 
   ./system/fsl_flexspi_nor_boot.c
@@ -138,17 +135,11 @@ add_executable(bootloader.elf
 
   ./system/syscalls.c
   ./system/utils/fsl_sbrk.c
-  ./system/base_handlers.c
+  ./system/handlers.c
   #./source/FreeRTOS/freertos_heap.c
   ./source/FreeRTOS/freertos_hooks.c
   ./modules/FreeRTOS/portable/GCC/ARM_CM4F/port.c
   ./modules/FreeRTOS/portable/MemMang/heap_4.c
-
-  #./source/usb/usb_device_cdc_acm.c
-  #./source/usb/usb_device_ch9.c
-  #./source/usb/usb_device_class.c
-  #  ./source/usb/usb_device_descriptor.c
-  #  ./source/usb/virtual_com.c
 
   ./source/swo.c
   ./source/main.c
