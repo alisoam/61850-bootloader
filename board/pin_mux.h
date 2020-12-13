@@ -40,16 +40,16 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x06U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
 #define BOARD_INITPINS_IOMUXC_GPR_GPR27_GPIO_MUX2_GPIO_SEL_MASK 0x40000000U /*!< GPIO2 and GPIO7 share same IO MUX function, GPIO_MUX2 selects one GPIO function: affected bits mask */
 
-/* GPIO_B1_14 (coord C14), LED3 */
+/* GPIO_AD_B0_01 (coord H10), LED1 */
 /* Routed pin properties */
-#define BOARD_INITPINS_LED3_PERIPHERAL                                     GPIO2   /*!< Peripheral name */
-#define BOARD_INITPINS_LED3_SIGNAL                                       gpio_io   /*!< Signal name */
-#define BOARD_INITPINS_LED3_CHANNEL                                          30U   /*!< Signal channel */
+#define BOARD_INITPINS_LED1_PERIPHERAL                                     GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINS_LED1_SIGNAL                                       gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_LED1_CHANNEL                                           1U   /*!< Signal channel */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_LED3_GPIO                                           GPIO2   /*!< GPIO peripheral base pointer */
-#define BOARD_INITPINS_LED3_GPIO_PIN                                         30U   /*!< GPIO pin number */
-#define BOARD_INITPINS_LED3_GPIO_PIN_MASK                            (1U << 30U)   /*!< GPIO pin mask */
+#define BOARD_INITPINS_LED1_GPIO                                           GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED1_GPIO_PIN                                          1U   /*!< GPIO pin number */
+#define BOARD_INITPINS_LED1_GPIO_PIN_MASK                             (1U << 1U)   /*!< GPIO pin mask */
 
 /* GPIO_AD_B0_02 (coord M11), LED2 */
 /* Routed pin properties */
@@ -62,16 +62,16 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED2_GPIO_PIN                                          2U   /*!< GPIO pin number */
 #define BOARD_INITPINS_LED2_GPIO_PIN_MASK                             (1U << 2U)   /*!< GPIO pin mask */
 
-/* GPIO_AD_B0_01 (coord H10), LED1 */
+/* GPIO_B1_14 (coord C14), LED3 */
 /* Routed pin properties */
-#define BOARD_INITPINS_LED1_PERIPHERAL                                     GPIO1   /*!< Peripheral name */
-#define BOARD_INITPINS_LED1_SIGNAL                                       gpio_io   /*!< Signal name */
-#define BOARD_INITPINS_LED1_CHANNEL                                           1U   /*!< Signal channel */
+#define BOARD_INITPINS_LED3_PERIPHERAL                                     GPIO2   /*!< Peripheral name */
+#define BOARD_INITPINS_LED3_SIGNAL                                       gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_LED3_CHANNEL                                          30U   /*!< Signal channel */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_INITPINS_LED1_GPIO                                           GPIO1   /*!< GPIO peripheral base pointer */
-#define BOARD_INITPINS_LED1_GPIO_PIN                                          1U   /*!< GPIO pin number */
-#define BOARD_INITPINS_LED1_GPIO_PIN_MASK                             (1U << 1U)   /*!< GPIO pin mask */
+#define BOARD_INITPINS_LED3_GPIO                                           GPIO2   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED3_GPIO_PIN                                         30U   /*!< GPIO pin number */
+#define BOARD_INITPINS_LED3_GPIO_PIN_MASK                            (1U << 30U)   /*!< GPIO pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

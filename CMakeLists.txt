@@ -57,7 +57,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-unwind-tables")
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
