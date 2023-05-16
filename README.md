@@ -1,4 +1,6 @@
 # Bootloader
+Bootloader of the 61850 board.
+For more information and documentation see [here](https://github.com/alisoam/61850-docs).
 
 ## Requirements
 - gcc for arm processors
@@ -6,10 +8,30 @@
 sudo apt install gcc-arm-none-eabi
 ```
 
-## Build
-for the  first time (update the Toolchain.cmake if it is necessary):
+- cmake
 ``` sh
-cp Toolchain.sample.cmake Toolchain.cmake
-mkdir build && cd build
-cmake ../
+sudo apt install cmake
+```
+
+- JLink
+Download from [here](https://www.segger.com/downloads/jlink/)
+
+
+## For the First Time
+- create the Toolchain.cmake from Toolchain.sample.cmake
+- run the following commands:
+```
+make init
+```
+
+
+## Development
+### Build
+``` sh
+make
+```
+
+### Program
+``` sh
+make program
 ```
